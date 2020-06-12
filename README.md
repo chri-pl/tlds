@@ -2,6 +2,7 @@
 
 ### Voraussetzungen für das Ausführung des Projektes mit dem Built-in PHP Server
 
+* Am einfachsten ein Linux Betriebssystem
 * Ein PHP Server der folgende [Anforderungen](https://laravel.com/docs/7.x/installation#server-requirements) erfüllt.
 * Zusätzlich wird das PHP Modul **php-curl** benötigt
 
