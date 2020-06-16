@@ -28,7 +28,7 @@ class TopLevelDomains extends Model
         
         return $response;
     }
-    
+
     /**
      * GET Querystring für die Anfrage an
      * die Productstore API generieren
@@ -40,6 +40,7 @@ class TopLevelDomains extends Model
      */
     protected function buildUrl(array $params) 
     {
+
         $apiUrl = config('app.API_URL');
 
         if ( ( $filters = json_decode($params['columnFilters']) ) !== null ) {
@@ -56,6 +57,7 @@ class TopLevelDomains extends Model
             }
         }
 
+//        https://api.autodns.com/productstore/v1/tld/_paginate?page=1&per_page=10&keyword=de&tldType[0]=CCTLD&tldType[1]=NEW_GTLD
         return $apiUrl . http_build_query($params);
     }
 }
