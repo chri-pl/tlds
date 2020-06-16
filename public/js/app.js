@@ -2387,6 +2387,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     page: {
@@ -2404,10 +2405,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      propPage: this.page,
-      propPerPage: this.perPage,
       rowsPerPageList: ['50', '100', '200', '500']
     };
+  },
+  computed: {
+    proxyPerPage: {
+      get: function get() {
+        return this.perPage;
+      },
+      set: function set(newValue) {
+        //                    this.perPage = newValue;
+        this.$emit('per-page-changed', newValue);
+      }
+    }
   },
   methods: {
     firstPage: function firstPage() {
@@ -2431,24 +2441,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     lastPage: function lastPage() {
-      if (this.page < this.totalPages) {
-        this.$emit('page-changed', this.totalPages);
+      if (this.propPage < this.totalPages) {
+        var newPage = this.totalPages;
+        this.$emit('page-changed', newPage);
       }
     },
     changePage: function changePage() {
       var newPage = parseInt(event.target.value, 10);
 
       if (Number.isNaN(newPage) === false && newPage > 1 && newPage < Math.floor(this.totalRows / this.perPage)) {
-        this.propPage = newPage;
-        this.$emit('page-changed', this.propPage);
+        this.$emit('page-changed', newPage);
       } else {
-        event.target.value = this.propPage;
+        event.target.value = this.page;
       }
-    },
-    changePerPage: function changePerPage() {
-      this.propPerPage = event.target.value;
-      this.$emit('per-page-changed', this.propPerPage);
-    }
+    } //            changePerPage() {
+    //                let newPerPage = event.target.value;
+    //                this.$emit('per-page-changed', newPerPage);
+    //            }
+
   }
 });
 
@@ -39426,29 +39436,24 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.propPerPage,
-                expression: "propPerPage"
+                value: _vm.proxyPerPage,
+                expression: "proxyPerPage"
               }
             ],
             on: {
-              change: [
-                function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.propPerPage = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                },
-                function($event) {
-                  return _vm.changePerPage()
-                }
-              ]
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.proxyPerPage = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
             }
           },
           _vm._l(_vm.rowsPerPageList, function(rowsPerPage) {
@@ -39503,7 +39508,7 @@ var render = function() {
         _vm._v("\n             \n            Seite \n            "),
         _c("input", {
           attrs: { type: "text" },
-          domProps: { value: _vm.propPage },
+          domProps: { value: _vm.page },
           on: {
             keyup: function($event) {
               if (

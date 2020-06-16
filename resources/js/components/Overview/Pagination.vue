@@ -2,7 +2,7 @@
     <div class="float-right">
         <div class="clearfix">
             <div class="float-left">
-                <select v-model="propPerPage" v-on:change="changePerPage()">
+                <select v-model="proxyPerPage">
                     <option 
                         v-for="rowsPerPage in rowsPerPageList" 
                         :value="rowsPerPage"
@@ -29,8 +29,8 @@
                 &nbsp;
                 Seite 
                 <input type="text" 
+                       :value="page"
                        v-on:keyup.enter.stop="changePage"
-                       :value="propPage"
                 >
                 von {{ totalPages }}
                 &nbsp;
@@ -69,8 +69,6 @@
         },
         data () {
             return {
-                propPage: this.page,
-                propPerPage: this.perPage,
                 rowsPerPageList: [
                     '50',
                     '100',
@@ -79,9 +77,19 @@
                 ]
             }
         },
+        computed : {
+            proxyPerPage: {
+                get: function () {
+                    return this.perPage;
+                },
+                set: function (newValue) {
+                    this.$emit('per-page-changed', newValue);
+                }
+            }
+        },
         methods: {
             firstPage() {
-                if ( this.page > 1 ) {
+                if  ( this.page > 1 ) {
                     let newPage = 1;
                     this.$emit('page-changed', newPage);
                 }
@@ -101,8 +109,9 @@
                 }
             },
             lastPage() {
-                if ( this.page < this.totalPages ) {
-                    this.$emit('page-changed', this.totalPages);
+                if ( this.propPage < this.totalPages ) {
+                    let newPage = this.totalPages;
+                    this.$emit('page-changed', newPage);
                 }
             },
             changePage() {
@@ -114,15 +123,10 @@
                     newPage > 1 &&
                     newPage < Math.floor( this.totalRows / this.perPage )
                 ) {
-                    this.propPage = newPage;
-                    this.$emit('page-changed', this.propPage);
+                    this.$emit('page-changed', newPage);
                 } else {
-                    event.target.value = this.propPage;
+                    event.target.value = this.page;
                 }
-            },
-            changePerPage() {
-                this.propPerPage = event.target.value;
-                this.$emit('per-page-changed', this.propPerPage);
             }
         }
     }
