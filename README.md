@@ -4,7 +4,7 @@
 
 * Am einfachsten ein Linux Betriebssystem
 * Ein PHP Server der folgende [Anforderungen](https://laravel.com/docs/7.x/installation#server-requirements) erfüllt.
-* Zusätzlich wird die PHP Module **php-curl** und **php-sqlite** benötigt
+* Zusätzlich werden die PHP Module **php-curl** und **php-sqlite** benötigt
 
 ### Zum Auführen der Anwendung sind folgende Schritte notwendig
 
