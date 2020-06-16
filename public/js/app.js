@@ -2387,7 +2387,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     page: {
@@ -2414,7 +2413,6 @@ __webpack_require__.r(__webpack_exports__);
         return this.perPage;
       },
       set: function set(newValue) {
-        //                    this.perPage = newValue;
         this.$emit('per-page-changed', newValue);
       }
     }
@@ -2454,11 +2452,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         event.target.value = this.page;
       }
-    } //            changePerPage() {
-    //                let newPerPage = event.target.value;
-    //                this.$emit('per-page-changed', newPerPage);
-    //            }
-
+    }
   }
 });
 
@@ -2515,21 +2509,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {},
   data: function data() {
     return {
-      label: '',
-      tldType: [],
-      filters: {}
+      filters: {
+        label: '',
+        tldType: []
+      }
     };
   },
   methods: {
     changeFilters: function changeFilters() {
-      this.$emit('filters-changed', {
-        label: this.label,
-        tldType: this.tldType
-      });
+      this.$emit('filters-changed', this.filters);
     }
   }
 });
@@ -39603,12 +39597,12 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.label,
-              expression: "label"
+              value: _vm.filters.label,
+              expression: "filters.label"
             }
           ],
           attrs: { type: "text", placeholder: "Nach TLDs suchen" },
-          domProps: { value: _vm.label },
+          domProps: { value: _vm.filters.label },
           on: {
             keyup: function($event) {
               if (
@@ -39624,7 +39618,7 @@ var render = function() {
               if ($event.target.composing) {
                 return
               }
-              _vm.label = $event.target.value
+              _vm.$set(_vm.filters, "label", $event.target.value)
             }
           }
         }),
@@ -39635,52 +39629,54 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.tldType,
-                expression: "tldType"
+                value: _vm.filters.tldType,
+                expression: "filters.tldType"
               }
             ],
             staticClass: "form-check-input",
             attrs: {
               type: "checkbox",
               checked: "",
-              id: "tldType-CCTLD",
+              id: "tldTypeCCTLD",
               value: "CCTLD"
             },
             domProps: {
-              checked: Array.isArray(_vm.tldType)
-                ? _vm._i(_vm.tldType, "CCTLD") > -1
-                : _vm.tldType
+              checked: Array.isArray(_vm.filters.tldType)
+                ? _vm._i(_vm.filters.tldType, "CCTLD") > -1
+                : _vm.filters.tldType
             },
             on: {
-              click: _vm.changeFilters,
-              change: function($event) {
-                var $$a = _vm.tldType,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = "CCTLD",
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.tldType = $$a.concat([$$v]))
+              change: [
+                function($event) {
+                  var $$a = _vm.filters.tldType,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "CCTLD",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(_vm.filters, "tldType", $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.filters,
+                          "tldType",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
                   } else {
-                    $$i > -1 &&
-                      (_vm.tldType = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
+                    _vm.$set(_vm.filters, "tldType", $$c)
                   }
-                } else {
-                  _vm.tldType = $$c
-                }
-              }
+                },
+                _vm.changeFilters
+              ]
             }
           }),
           _vm._v(" "),
           _c(
             "label",
-            {
-              staticClass: "form-check-label",
-              attrs: { for: "tldType-CCTLD" }
-            },
+            { staticClass: "form-check-label", attrs: { for: "tldTypeCCTLD" } },
             [_vm._v("CCTLD")]
           )
         ]),
@@ -39691,49 +39687,54 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.tldType,
-                expression: "tldType"
+                value: _vm.filters.tldType,
+                expression: "filters.tldType"
               }
             ],
             staticClass: "form-check-input",
             attrs: {
               type: "checkbox",
               checked: "",
-              id: "tldType-GTLD",
+              id: "tldTypeGtld",
               value: "GTLD"
             },
             domProps: {
-              checked: Array.isArray(_vm.tldType)
-                ? _vm._i(_vm.tldType, "GTLD") > -1
-                : _vm.tldType
+              checked: Array.isArray(_vm.filters.tldType)
+                ? _vm._i(_vm.filters.tldType, "GTLD") > -1
+                : _vm.filters.tldType
             },
             on: {
-              click: _vm.changeFilters,
-              change: function($event) {
-                var $$a = _vm.tldType,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = "GTLD",
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.tldType = $$a.concat([$$v]))
+              change: [
+                function($event) {
+                  var $$a = _vm.filters.tldType,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "GTLD",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(_vm.filters, "tldType", $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.filters,
+                          "tldType",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
                   } else {
-                    $$i > -1 &&
-                      (_vm.tldType = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
+                    _vm.$set(_vm.filters, "tldType", $$c)
                   }
-                } else {
-                  _vm.tldType = $$c
-                }
-              }
+                },
+                _vm.changeFilters
+              ]
             }
           }),
           _vm._v(" "),
           _c(
             "label",
-            { staticClass: "form-check-label", attrs: { for: "tldType-GTLD" } },
+            { staticClass: "form-check-label", attrs: { for: "tldTypeGtld" } },
             [_vm._v("GTLD")]
           )
         ]),
@@ -39744,43 +39745,48 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.tldType,
-                expression: "tldType"
+                value: _vm.filters.tldType,
+                expression: "filters.tldType"
               }
             ],
             staticClass: "form-check-input",
             attrs: {
               type: "checkbox",
               checked: "",
-              id: "tldType-NEW_GTLD",
+              id: "tldTypeNewGtld",
               value: "NEW_GTLD"
             },
             domProps: {
-              checked: Array.isArray(_vm.tldType)
-                ? _vm._i(_vm.tldType, "NEW_GTLD") > -1
-                : _vm.tldType
+              checked: Array.isArray(_vm.filters.tldType)
+                ? _vm._i(_vm.filters.tldType, "NEW_GTLD") > -1
+                : _vm.filters.tldType
             },
             on: {
-              click: _vm.changeFilters,
-              change: function($event) {
-                var $$a = _vm.tldType,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = "NEW_GTLD",
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.tldType = $$a.concat([$$v]))
+              change: [
+                function($event) {
+                  var $$a = _vm.filters.tldType,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "NEW_GTLD",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(_vm.filters, "tldType", $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.filters,
+                          "tldType",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
                   } else {
-                    $$i > -1 &&
-                      (_vm.tldType = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
+                    _vm.$set(_vm.filters, "tldType", $$c)
                   }
-                } else {
-                  _vm.tldType = $$c
-                }
-              }
+                },
+                _vm.changeFilters
+              ]
             }
           }),
           _vm._v(" "),
@@ -39788,7 +39794,7 @@ var render = function() {
             "label",
             {
               staticClass: "form-check-label",
-              attrs: { for: "tldType-NEW_GTLD" }
+              attrs: { for: "tldTypeNewGtld" }
             },
             [_vm._v("NEW_GTLD")]
           )

@@ -68,7 +68,7 @@
         },
         computed: {
             totalPages() {
-                return Math.floor( this.totalRows / this.perPage );
+                return Math.ceil( this.totalRows / this.perPage );
             }
         },
         created () {

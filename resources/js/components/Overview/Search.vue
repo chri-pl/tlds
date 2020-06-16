@@ -1,40 +1,43 @@
 <template>
     <div class="float-left">
-        <form v-on:submit.prevent="">
+        <form v-on:submit.prevent>
             <input type="text"
-                   v-model="label"
+                   v-model="filters.label"
                    placeholder="Nach TLDs suchen"
                    v-on:keyup.enter.stop="changeFilters"
             >
             <div class="form-check form-check-inline">
-                <input type="checkbox" checked
-                       id="tldType-CCTLD"
-                       v-model="tldType" 
+                <input type="checkbox"
+                       class="form-check-input"
+                       checked
+                       id="tldTypeCCTLD"
+                       v-model="filters.tldType" 
                        value="CCTLD" 
-                       v-on:click="changeFilters"
-                       class="form-check-input"
+                       v-on:change="changeFilters"
                 >
-                <label class="form-check-label" for="tldType-CCTLD">CCTLD</label>
+                <label class="form-check-label" for="tldTypeCCTLD">CCTLD</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="checkbox" checked
-                       id="tldType-GTLD"
-                       v-model="tldType" 
+                <input type="checkbox"
+                       class="form-check-input"
+                       checked
+                       id="tldTypeGtld"
+                       v-model="filters.tldType" 
                        value="GTLD" 
-                       v-on:click="changeFilters"
-                       class="form-check-input"
+                       v-on:change="changeFilters"
                 >
-                <label class="form-check-label" for="tldType-GTLD">GTLD</label>
+                <label class="form-check-label" for="tldTypeGtld">GTLD</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="checkbox" checked
-                       id="tldType-NEW_GTLD"
-                       v-model="tldType" 
-                       value="NEW_GTLD" 
-                       v-on:click="changeFilters"
+                <input type="checkbox"
                        class="form-check-input"
+                       checked
+                       id="tldTypeNewGtld"
+                       v-model="filters.tldType" 
+                       value="NEW_GTLD" 
+                       v-on:change="changeFilters"
                 >
-                <label class="form-check-label" for="tldType-NEW_GTLD">NEW_GTLD</label>
+                <label class="form-check-label" for="tldTypeNewGtld">NEW_GTLD</label>
             </div>
         </form>
     </div>
@@ -43,22 +46,17 @@
 <script>
 
     export default {
-        props: {
-        },
         data () {
             return {
-                label: '',
-                tldType: [],
                 filters: {
+                    label: '',
+                    tldType: []
                 }
             }
         },
         methods: {
             changeFilters: function() {
-                this.$emit('filters-changed', {
-                    label: this.label,
-                    tldType: this.tldType
-                });
+                this.$emit('filters-changed', this.filters);
             }
         }
     }
